@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import './Cart.css';
 import Home from './pages/Home';
 import { 
   Blog, HelpSupport, Affiliate, Investors, Terms, 
@@ -8,9 +9,15 @@ import {
 } from './pages/StaticPages';
 import TeachDashboard from './pages/TeachDashboard';
 import CourseDetail from './pages/CourseDetail';
+import { useCart } from './context/CartContext';
 
 function App() {
   const [modalType, setModalType] = useState(null);
+  const { cart, isCartOpen, toggleCart, removeFromCart } = useCart();
+
+  const totalCartPrice = cart.reduce((total, item) => {
+    return total + parseFloat(item.currentPrice.replace('$', ''));
+  }, 0).toFixed(2);
 
   return (
     <BrowserRouter>
@@ -28,6 +35,10 @@ function App() {
           <div className="nav-right">
             <Link to="/business" className="nav-link">Udemy Business</Link>
             <Link to="/teach" className="nav-link">Teach on Udemy</Link>
+            <div className="cart-icon-wrapper" onClick={toggleCart}>
+              🛒
+              {cart.length > 0 && <span className="cart-badge">{cart.length}</span>}
+            </div>
             <button className="btn-outline" onClick={() => setModalType('login')}>Log in</button>
             <button className="btn-primary" onClick={() => setModalType('signup')}>Sign up</button>
           </div>
@@ -130,6 +141,43 @@ function App() {
                   {modalType === 'login' ? 'Sign up' : 'Log in'}
                 </span>
               </p>
+            </div>
+          </div>
+        )}
+
+        {/* Cart Drawer */}
+        {isCartOpen && (
+          <div className="cart-backdrop" onClick={toggleCart}>
+            <div className="cart-drawer" onClick={e => e.stopPropagation()}>
+              <div className="cart-header">
+                <h2>Your Cart ({cart.length})</h2>
+                <button className="close-cart" onClick={toggleCart}>✕</button>
+              </div>
+              <div className="cart-items">
+                {cart.length === 0 ? (
+                  <p className="empty-cart">Your cart is empty. Keep shopping to find a course!</p>
+                ) : (
+                  cart.map(item => (
+                    <div className="cart-item" key={item.id}>
+                      <img src={item.img} alt={item.title} />
+                      <div className="cart-item-details">
+                        <h4>{item.title}</h4>
+                        <div className="cart-item-price">{item.currentPrice}</div>
+                        <button className="remove-item" onClick={() => removeFromCart(item.id)}>Remove</button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+              {cart.length > 0 && (
+                <div className="cart-footer">
+                  <div className="cart-total">
+                    <span>Total:</span>
+                    <h3>${totalCartPrice}</h3>
+                  </div>
+                  <button className="btn-primary full-width">Checkout</button>
+                </div>
+              )}
             </div>
           </div>
         )}

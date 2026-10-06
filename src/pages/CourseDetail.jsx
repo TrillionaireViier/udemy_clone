@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import './CourseDetail.css';
 
 const courses = [
@@ -112,6 +113,7 @@ const courses = [
 
 export default function CourseDetail() {
   const { id } = useParams();
+  const { addToCart, cart } = useCart();
   const course = courses.find(c => c.id === parseInt(id));
 
   if (!course) {
@@ -166,7 +168,12 @@ export default function CourseDetail() {
             </div>
             <p className="time-left">⏱️ 5 hours left at this price!</p>
             
-            <button className="btn-primary full-width checkout-btn">Add to cart</button>
+            <button 
+              className="btn-primary full-width checkout-btn"
+              onClick={() => addToCart(course)}
+            >
+              {cart.some(item => item.id === course.id) ? 'Added to cart' : 'Add to cart'}
+            </button>
             <button className="btn-outline full-width checkout-btn mt-2">Buy now</button>
             <p className="guarantee">30-Day Money-Back Guarantee</p>
             

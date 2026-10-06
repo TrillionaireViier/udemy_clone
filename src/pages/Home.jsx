@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import heroImg from '../assets/hero.png';
 
 const courses = [
@@ -61,6 +62,8 @@ const courses = [
 ];
 
 export default function Home() {
+  const { addToCart, cart } = useCart();
+
   return (
     <>
       {/* Hero Section */}
@@ -105,6 +108,17 @@ export default function Home() {
                   <span className="current-price">{course.currentPrice}</span>
                   <span className="original-price">{course.originalPrice}</span>
                 </div>
+                <button 
+                  className="btn-primary" 
+                  style={{ width: '100%', marginTop: '0.8rem', padding: '0.5rem', fontSize: '0.9rem' }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    addToCart(course);
+                  }}
+                >
+                  {cart.some(item => item.id === course.id) ? 'Added to cart' : 'Add to cart'}
+                </button>
                 {course.badge && <div className={`badge ${course.badge === 'Bestseller' ? 'bestseller' : ''}`}>{course.badge}</div>}
               </div>
               </div>
