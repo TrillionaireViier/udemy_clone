@@ -7,6 +7,7 @@ import {
   PrivacyPolicy, CookieSettings, Sitemap, Accessibility 
 } from './pages/StaticPages';
 import TeachDashboard from './pages/TeachDashboard';
+import CourseDetail from './pages/CourseDetail';
 
 function App() {
   const [modalType, setModalType] = useState(null);
@@ -36,6 +37,7 @@ function App() {
         <div style={{ flex: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/course/:id" element={<CourseDetail />} />
             <Route path="/teach" element={<TeachDashboard />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/help-and-support" element={<HelpSupport />} />

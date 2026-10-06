@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import heroImg from '../assets/hero.png';
 
 const courses = [
@@ -85,8 +86,9 @@ export default function Home() {
         
         <div className="course-grid">
           {courses.map(course => (
-            <div className="course-card" key={course.id}>
-              <div className="course-img-wrapper">
+            <Link to={`/course/${course.id}`} style={{ textDecoration: 'none', color: 'inherit' }} key={course.id}>
+              <div className="course-card">
+                <div className="course-img-wrapper">
                 <img src={course.img} alt={course.title} />
                 <div className="course-overlay">
                   <div className="play-icon">▶</div>
@@ -105,7 +107,8 @@ export default function Home() {
                 </div>
                 {course.badge && <div className={`badge ${course.badge === 'Bestseller' ? 'bestseller' : ''}`}>{course.badge}</div>}
               </div>
-            </div>
+              </div>
+            </Link>
           ))}
         </div>
       </section>
