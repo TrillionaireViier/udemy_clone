@@ -6,6 +6,7 @@ import {
   Blog, HelpSupport, Affiliate, Investors, Terms, 
   PrivacyPolicy, CookieSettings, Sitemap, Accessibility 
 } from './pages/StaticPages';
+import TeachDashboard from './pages/TeachDashboard';
 
 function App() {
   const [modalType, setModalType] = useState(null);
@@ -35,6 +36,7 @@ function App() {
         <div style={{ flex: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/teach" element={<TeachDashboard />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/help-and-support" element={<HelpSupport />} />
             <Route path="/affiliate" element={<Affiliate />} />
