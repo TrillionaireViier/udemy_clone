@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './TeachDashboard.css';
 
-const myProducts = [
+const initialProducts = [
   {
     id: 1,
     title: '100 Days of Code: The Complete Python Pro Bootcamp',
@@ -41,11 +41,21 @@ const myProducts = [
 ];
 
 export default function TeachDashboard() {
+  const [products, setProducts] = useState(initialProducts);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [viewingStats, setViewingStats] = useState(null);
+
+  const handleEditSave = (e) => {
+    e.preventDefault();
+    setProducts(products.map(p => p.id === editingProduct.id ? editingProduct : p));
+    setEditingProduct(null);
+  };
+
   return (
     <div className="teach-container">
       <div className="teach-header">
         <h1>Instructor Dashboard</h1>
-        <button className="btn-primary">New Course</button>
+        <button className="btn-primary">+ New Course</button>
       </div>
 
       <div className="stats-grid">
@@ -64,7 +74,7 @@ export default function TeachDashboard() {
       </div>
 
       <div className="products-section">
-        <h2>All Products ({myProducts.length})</h2>
+        <h2>All Products ({products.length})</h2>
         <div className="table-responsive">
           <table className="products-table">
             <thead>
@@ -78,7 +88,7 @@ export default function TeachDashboard() {
               </tr>
             </thead>
             <tbody>
-              {myProducts.map(product => (
+              {products.map(product => (
                 <tr key={product.id}>
                   <td>
                     <div className="product-info">
@@ -94,9 +104,9 @@ export default function TeachDashboard() {
                   <td>{product.students.toLocaleString()}</td>
                   <td>{product.rating} ★</td>
                   <td>{product.revenue}</td>
-                  <td>
-                    <button className="action-btn">Edit</button>
-                    <button className="action-btn outline">Stats</button>
+                  <td className="actions-cell">
+                    <button className="action-btn edit-btn" onClick={() => setEditingProduct(product)}>✏️ Edit</button>
+                    <button className="action-btn stats-btn" onClick={() => setViewingStats(product)}>📊 Stats</button>
                   </td>
                 </tr>
               ))}
@@ -104,6 +114,77 @@ export default function TeachDashboard() {
           </table>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      {editingProduct && (
+        <div className="dashboard-modal-backdrop" onClick={() => setEditingProduct(null)}>
+          <div className="dashboard-modal" onClick={e => e.stopPropagation()}>
+            <h3>Edit Course</h3>
+            <form onSubmit={handleEditSave} className="edit-form">
+              <div className="form-group">
+                <label>Title</label>
+                <input 
+                  type="text" 
+                  value={editingProduct.title}
+                  onChange={e => setEditingProduct({...editingProduct, title: e.target.value})}
+                />
+              </div>
+              <div className="form-group">
+                <label>Status</label>
+                <select 
+                  value={editingProduct.status}
+                  onChange={e => setEditingProduct({...editingProduct, status: e.target.value})}
+                >
+                  <option value="Live">Live</option>
+                  <option value="Draft">Draft</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Price / Revenue String</label>
+                <input 
+                  type="text" 
+                  value={editingProduct.revenue}
+                  onChange={e => setEditingProduct({...editingProduct, revenue: e.target.value})}
+                />
+              </div>
+              <div className="modal-actions">
+                <button type="button" className="action-btn outline" onClick={() => setEditingProduct(null)}>Cancel</button>
+                <button type="submit" className="action-btn edit-btn">Save Changes</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Stats Modal */}
+      {viewingStats && (
+        <div className="dashboard-modal-backdrop" onClick={() => setViewingStats(null)}>
+          <div className="dashboard-modal stats-modal" onClick={e => e.stopPropagation()}>
+            <h3>Performance: {viewingStats.title}</h3>
+            <div className="course-stats-detailed">
+              <div className="detail-stat">
+                <span>Active Students</span>
+                <strong>{viewingStats.students.toLocaleString()}</strong>
+              </div>
+              <div className="detail-stat">
+                <span>Course Rating</span>
+                <strong>{viewingStats.rating} ★</strong>
+              </div>
+              <div className="detail-stat">
+                <span>Total Revenue</span>
+                <strong style={{ color: '#2ed573' }}>{viewingStats.revenue}</strong>
+              </div>
+              <div className="detail-stat">
+                <span>Completion Rate</span>
+                <strong>68%</strong>
+              </div>
+            </div>
+            <button className="btn-primary full-width" onClick={() => setViewingStats(null)} style={{ marginTop: '2rem' }}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
