@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import heroImg from './assets/hero.png';
 
@@ -61,6 +61,8 @@ const courses = [
 ];
 
 function App() {
+  const [modalType, setModalType] = useState(null); // 'login' | 'signup' | null
+
   return (
     <div className="app">
       {/* Navbar */}
@@ -76,8 +78,8 @@ function App() {
         <div className="nav-right">
           <a href="#" className="nav-link">Udemy Business</a>
           <a href="#" className="nav-link">Teach on Udemy</a>
-          <button className="btn-outline">Log in</button>
-          <button className="btn-primary">Sign up</button>
+          <button className="btn-outline" onClick={() => setModalType('login')}>Log in</button>
+          <button className="btn-primary" onClick={() => setModalType('signup')}>Sign up</button>
         </div>
       </nav>
 
@@ -128,6 +130,86 @@ function App() {
           ))}
         </div>
       </section>
+
+      {/* Footer Section */}
+      <footer className="footer">
+        <div className="footer-top">
+          <div className="footer-col">
+            <div className="logo">Learnify.</div>
+            <p>Empowering the world to develop skills for the future.</p>
+          </div>
+          <div className="footer-col">
+            <h3>Learnify Business</h3>
+            <a href="#">Teach on Learnify</a>
+            <a href="#">Get the app</a>
+            <a href="#">About us</a>
+            <a href="#">Contact us</a>
+          </div>
+          <div className="footer-col">
+            <h3>Careers</h3>
+            <a href="#">Blog</a>
+            <a href="#">Help and Support</a>
+            <a href="#">Affiliate</a>
+            <a href="#">Investors</a>
+          </div>
+          <div className="footer-col">
+            <h3>Terms</h3>
+            <a href="#">Privacy policy</a>
+            <a href="#">Cookie settings</a>
+            <a href="#">Sitemap</a>
+            <a href="#">Accessibility statement</a>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <div className="lang-btn">🌐 English</div>
+          <div className="copyright">© 2026 Learnify, Inc.</div>
+        </div>
+      </footer>
+
+      {/* Modals */}
+      {modalType && (
+        <div className="modal-backdrop" onClick={() => setModalType(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setModalType(null)}>✕</button>
+            <h2>{modalType === 'login' ? 'Log In to Your Account' : 'Sign Up and Start Learning'}</h2>
+            
+            <form className="auth-form" onSubmit={(e) => { e.preventDefault(); alert(modalType === 'login' ? 'Logged in successfully!' : 'Account created successfully!'); setModalType(null); }}>
+              {modalType === 'signup' && (
+                <div className="input-group">
+                  <label>Full Name</label>
+                  <input type="text" placeholder="John Doe" required />
+                </div>
+              )}
+              <div className="input-group">
+                <label>Email</label>
+                <input type="email" placeholder="name@example.com" required />
+              </div>
+              <div className="input-group">
+                <label>Password</label>
+                <input type="password" placeholder="••••••••" required />
+              </div>
+              
+              <button type="submit" className="btn-primary full-width">
+                {modalType === 'login' ? 'Log In' : 'Sign Up'}
+              </button>
+              
+              <div className="auth-divider"><span>or</span></div>
+              
+              <button type="button" className="btn-social google">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="G" />
+                Continue with Google
+              </button>
+            </form>
+
+            <p className="auth-switch">
+              {modalType === 'login' ? "Don't have an account? " : "Already have an account? "}
+              <span onClick={() => setModalType(modalType === 'login' ? 'signup' : 'login')}>
+                {modalType === 'login' ? 'Sign up' : 'Log in'}
+              </span>
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
