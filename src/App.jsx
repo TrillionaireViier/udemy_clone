@@ -26,7 +26,28 @@ function App() {
         <nav className="navbar">
           <div className="nav-left">
             <Link to="/" className="logo" style={{ textDecoration: 'none' }}>Learnify.</Link>
-            <button className="categories-btn">Categories</button>
+            
+            <div className="categories-wrapper">
+              <button className="categories-btn">Categories</button>
+              <div className="categories-dropdown">
+                <ul>
+                  <li><Link to="/">Development <span className="arrow">›</span></Link></li>
+                  <li><Link to="/">Business <span className="arrow">›</span></Link></li>
+                  <li><Link to="/">Finance & Accounting <span className="arrow">›</span></Link></li>
+                  <li><Link to="/">IT & Software <span className="arrow">›</span></Link></li>
+                  <li><Link to="/">Office Productivity <span className="arrow">›</span></Link></li>
+                  <li><Link to="/">Personal Development <span className="arrow">›</span></Link></li>
+                  <li><Link to="/">Design <span className="arrow">›</span></Link></li>
+                  <li><Link to="/">Marketing <span className="arrow">›</span></Link></li>
+                  <li><Link to="/">Lifestyle <span className="arrow">›</span></Link></li>
+                  <li><Link to="/">Photography & Video <span className="arrow">›</span></Link></li>
+                  <li><Link to="/">Health & Fitness <span className="arrow">›</span></Link></li>
+                  <li><Link to="/">Music <span className="arrow">›</span></Link></li>
+                  <li><Link to="/">Teaching & Academics <span className="arrow">›</span></Link></li>
+                </ul>
+              </div>
+            </div>
+
             <div className="search-bar">
               <span className="search-icon">🔍</span>
               <input type="text" placeholder="Search for anything..." />
