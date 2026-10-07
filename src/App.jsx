@@ -9,6 +9,7 @@ import {
 } from './pages/StaticPages';
 import TeachDashboard from './pages/TeachDashboard';
 import CourseDetail from './pages/CourseDetail';
+import CategoryPage from './pages/CategoryPage';
 import { useCart } from './context/CartContext';
 
 function App() {
@@ -31,19 +32,19 @@ function App() {
               <button className="categories-btn">Categories</button>
               <div className="categories-dropdown">
                 <ul>
-                  <li><Link to="/">Development <span className="arrow">›</span></Link></li>
-                  <li><Link to="/">Business <span className="arrow">›</span></Link></li>
-                  <li><Link to="/">Finance & Accounting <span className="arrow">›</span></Link></li>
-                  <li><Link to="/">IT & Software <span className="arrow">›</span></Link></li>
-                  <li><Link to="/">Office Productivity <span className="arrow">›</span></Link></li>
-                  <li><Link to="/">Personal Development <span className="arrow">›</span></Link></li>
-                  <li><Link to="/">Design <span className="arrow">›</span></Link></li>
-                  <li><Link to="/">Marketing <span className="arrow">›</span></Link></li>
-                  <li><Link to="/">Lifestyle <span className="arrow">›</span></Link></li>
-                  <li><Link to="/">Photography & Video <span className="arrow">›</span></Link></li>
-                  <li><Link to="/">Health & Fitness <span className="arrow">›</span></Link></li>
-                  <li><Link to="/">Music <span className="arrow">›</span></Link></li>
-                  <li><Link to="/">Teaching & Academics <span className="arrow">›</span></Link></li>
+                  <li><Link to="/category/development">Development <span className="arrow">›</span></Link></li>
+                  <li><Link to="/category/business">Business <span className="arrow">›</span></Link></li>
+                  <li><Link to="/category/finance-accounting">Finance & Accounting <span className="arrow">›</span></Link></li>
+                  <li><Link to="/category/it-software">IT & Software <span className="arrow">›</span></Link></li>
+                  <li><Link to="/category/office-productivity">Office Productivity <span className="arrow">›</span></Link></li>
+                  <li><Link to="/category/personal-development">Personal Development <span className="arrow">›</span></Link></li>
+                  <li><Link to="/category/design">Design <span className="arrow">›</span></Link></li>
+                  <li><Link to="/category/marketing">Marketing <span className="arrow">›</span></Link></li>
+                  <li><Link to="/category/lifestyle">Lifestyle <span className="arrow">›</span></Link></li>
+                  <li><Link to="/category/photography-video">Photography & Video <span className="arrow">›</span></Link></li>
+                  <li><Link to="/category/health-fitness">Health & Fitness <span className="arrow">›</span></Link></li>
+                  <li><Link to="/category/music">Music <span className="arrow">›</span></Link></li>
+                  <li><Link to="/category/teaching-academics">Teaching & Academics <span className="arrow">›</span></Link></li>
                 </ul>
               </div>
             </div>
@@ -71,6 +72,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/course/:id" element={<CourseDetail />} />
             <Route path="/teach" element={<TeachDashboard />} />
+            <Route path="/category/:categoryId" element={<CategoryPage />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/help-and-support" element={<HelpSupport />} />
             <Route path="/affiliate" element={<Affiliate />} />
